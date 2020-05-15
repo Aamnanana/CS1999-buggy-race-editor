@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import sqlite3 as sql
 app = Flask(__name__)
 
+
 DATABASE_FILE = "database.db"
 DEFAULT_BUGGY_ID = "1"
 
