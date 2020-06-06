@@ -39,6 +39,14 @@
 
     <br>
 
+    <label for="fireproof">Do you want a fireproof buggy? (Y/N) :</label>
+    <input type="text"  name="fireproof" value="{{ buggy['fireproof'] }}" />
+    {% if fireproof == 'Y' %}
+      {{ msg }}
+    {% endif %}
+
+    <br>
+
     <input type="submit" class="button">
 
   </form>
