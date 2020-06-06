@@ -32,7 +32,8 @@ def create_buggy():
     if request.method == 'GET':
         return render_template("buggy-form.html", buggy = record)
     elif request.method == 'POST':
-
+        #fireproof = False
+        total_cost = 0
         msg=""
 
         flag_color = request.form['flag_color']
@@ -52,7 +53,14 @@ def create_buggy():
             return render_template("buggy-form.html", msg = msg, buggy = record)
         elif int(qty_wheels) < 2:
             msg = f"You cannot have {qty_wheels}. Please try again!" 
-            return render_template("buggy-form.html", msg = msg, buggy = record)    
+            return render_template("buggy-form.html", msg = msg, buggy = record)
+
+        fireproof = request.form['fireproof']
+        if fireproof:
+            msg = f"fireproof={fireproof}"
+            total_cost = int(70)
+            print("this works")
+            return render_template("buggy-form.html", msg = msg, buggy = record)
 
         try:
 
@@ -60,34 +68,9 @@ def create_buggy():
                 cur = con.cursor()
 
                 cur.execute(
-                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=? WHERE id=?",
-                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, DEFAULT_BUGGY_ID)
+                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, fireproof=?, total_cost=? WHERE id=?",
+                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, fireproof, total_cost, DEFAULT_BUGGY_ID)
                 )
-
-                # cur.execute(
-                #     "UPDATE buggies set qty_wheels=? WHERE id=?", 
-                #     (qty_wheels, DEFAULT_BUGGY_ID)
-                # )
-
-                # cur.execute(
-                #     "UPDATE buggies set flag_color=? WHERE id=?",
-                #     (flag_color, DEFAULT_BUGGY_ID)
-                # )
-
-                # cur.execute(
-                #     "UPDATE buggies set flag_color_secondary=? WHERE id=?",
-                #     (flag_color_secondary, DEFAULT_BUGGY_ID)
-                # )
-
-                # cur.execute(
-                #     "UPDATE buggies set flag_pattern=? WHERE id=?",
-                #     (flag_pattern, DEFAULT_BUGGY_ID)
-                # )
-
-                #  cur.execute(
-                #      "UPDATE buggies set total_cost=? WHERE id=?",
-                #      (total_cost, DEFAULT_BUGGY_ID)
-                #  )
 
                 con.commit()
                 msg = "Record successfully saved"
