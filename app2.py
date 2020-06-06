@@ -23,35 +23,68 @@ def home():
 #------------------------------------------------------------
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
-  if request.method == 'GET':
-    return render_template("buggy-form.html")
-  elif request.method == 'POST':
-    msg=""
-    try:
-      qty_wheels = request.form['qty_wheels']
-      flag_color = request.form['flag_color']
-      msg = f"qty_wheels={qty_wheels}"
-      msg = f"flag_color={flag_color}"
-      with sql.connect(DATABASE_FILE) as con:
-        cur = con.cursor()
-        cur.execute(
-          "UPDATE buggies set qty_wheels=? WHERE id=?",
-          (qty_wheels, DEFAULT_BUGGY_ID)
-        )
-        con.commit()
-      with sql.connect(DATABASE_FILE) as con:
-        cur.execute(
-          "UPDATE buggies set flag_color=? WHERE id=?", 
-          (flag_color, DEFAULT_BUGGY_ID)
-        )
-        con.commit()
-        msg = "Record successfully saved"
-    except:
-      con.rollback()
-      msg = "error in update operation"
-    finally:
-      con.close()
-      return render_template("updated.html", msg = msg)
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies")
+    record = cur.fetchone();
+
+    if request.method == 'GET':
+        return render_template("buggy-form.html", buggy = record)
+    elif request.method == 'POST':
+        msg=""
+
+        qty_wheels = request.form['qty_wheels']
+        if not qty_wheels.isdigit():
+            msg = f"{qty_wheels} is not a number. Please try again!" 
+            return render_template("buggy-form.html", msg = msg, buggy = record)
+            
+        try:
+            flag_color = request.form['flag_color']
+            flag_color_secondary = request.form['flag_color_secondary']
+            flag_pattern = request.form['flag_pattern']
+        #total_cost = request.form['total_cost']
+
+            msg = f"flag_color={flag_color}" 
+            msg = f"flag_color_secondary={flag_color_secondary}" 
+            msg = f"flag_pattern={flag_pattern}" 
+        #msg = f"total_cost={total_cost}" 
+
+            with sql.connect(DATABASE_FILE) as con:
+                cur = con.cursor()
+                cur.execute(
+                    "UPDATE buggies set qty_wheels=? WHERE id=?", 
+                    (qty_wheels, DEFAULT_BUGGY_ID)
+                )
+
+                cur.execute(
+                    "UPDATE buggies set flag_color=? WHERE id=?",
+                    (flag_color, DEFAULT_BUGGY_ID)
+                )
+
+                cur.execute(
+                    "UPDATE buggies set flag_color_secondary=? WHERE id=?",
+                    (flag_color_secondary, DEFAULT_BUGGY_ID)
+                )
+
+                cur.execute(
+                    "UPDATE buggies set flag_pattern=? WHERE id=?",
+                    (flag_pattern, DEFAULT_BUGGY_ID)
+                )
+
+        # cur.execute(
+        #     "UPDATE buggies set total_cost=? WHERE id=?",
+        #     (total_cost, DEFAULT_BUGGY_ID)
+        # )
+
+                con.commit()
+                msg = "Record successfully saved"
+        except:
+            con.rollback()
+            msg = "error in update operation"
+        finally:
+            con.close()
+            return render_template("updated.html", msg = msg)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
@@ -71,7 +104,6 @@ def show_buggies():
 @app.route('/new')
 def edit_buggy():
   return render_template("buggy-form.html")
-
 
 #------------------------------------------------------------
 # get JSON from current record

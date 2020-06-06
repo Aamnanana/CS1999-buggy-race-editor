@@ -29,23 +29,34 @@ con.execute("""
     qty_wheels            INTEGER DEFAULT 4,
     flag_color            VARCHAR(20),
     flag_color_secondary  VARCHAR(20),
-    flag_pattern          VARCHAR(20)
+    flag_pattern          VARCHAR(20),
+    total_cost            INTEGER
   )
-
 """)
 
 print("- Table \"buggies\" exists OK")
 
 cur = con.cursor()
 
+# ###################################################
+# #Adding a new row for cost of buggy#
+# cur.execute(
+#   "INSERT INTO buggies(total_cost) VALUES (?)"
+# )
+# con.commit()
+# ####################################################
+
 cur.execute("SELECT * FROM buggies LIMIT 1")
 rows = cur.fetchall()
 if len(rows) == 0:
   cur.execute("INSERT INTO buggies (qty_wheels) VALUES (4)")
+  #cur.execute("INSERT INTO buggies (buggy_cost) VALUES (40)")
   con.commit()
   print("- Added one 4-wheeled buggy")
 else:
   print("- Found a buggy in the database, nice")
+
+
 print("- done")
 
 con.close()
