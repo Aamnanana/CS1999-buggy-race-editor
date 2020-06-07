@@ -7,7 +7,10 @@
   <h1>Make buggy</h1>
 
   <p>
-    {{ fire }}
+    {{ msg }}
+  </p>
+  <p>
+    {{ hamster }}
   </p>
 
   <form action="/new" method="post">
@@ -39,11 +42,8 @@
 
     <br>
 
-    <label for="fireproof">Do you want a fireproof buggy? (Y/N) :</label>
-    <input type="text"  name="fireproof" value="{{ buggy['fireproof'] }}" />
-    {% if fireproof == 'Y' %}
-      {{ fire }}
-    {% endif %}
+    <label for="hamster_booster">Hamster Booster:</label>
+    <input type="text" name="hamster_booster" value="{{ buggy['hamster_booster'] }}" />
 
 
     <br>
