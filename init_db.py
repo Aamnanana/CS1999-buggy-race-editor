@@ -30,7 +30,7 @@ con.execute("""
     flag_color            VARCHAR(20),
     flag_color_secondary  VARCHAR(20),
     flag_pattern          VARCHAR(20),
-    total_cost            INTEGER
+    total_cost            INTEGER DEFAULT 0,
     fireproof             BOOLEAN
   )
 """)
