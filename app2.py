@@ -33,7 +33,7 @@ def create_buggy():
         return render_template("buggy-form.html", buggy = record)
     elif request.method == 'POST':
         #fireproof = False
-        total_cost = 0
+        #total_cost = 0
         msg=""
 
         flag_color = request.form['flag_color']
@@ -57,10 +57,11 @@ def create_buggy():
 
         fireproof = request.form['fireproof']
         if fireproof == 'Y':
-            #msg = f"fireproof={fireproof}"
-            total_cost += 70
+          msg = f"A fireproof buggy costs {fireproof}, do you want to pay 70 coins? Enter yes or no into the box." 
+          if msg == "yes":
+            total_cost = 70
             print("this works", total_cost)
-            return render_template("buggy-form.html", msg = msg, buggy = record)
+            return render_template("buggy-form.html", msg = msg, buggy = record, total_cost = total_cost)
 
         try:
 
@@ -68,8 +69,8 @@ def create_buggy():
                 cur = con.cursor()
 
                 cur.execute(
-                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, fireproof=?, total_cost=? WHERE id=?",
-                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, fireproof, total_cost, DEFAULT_BUGGY_ID)
+                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=? WHERE id=?",
+                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, DEFAULT_BUGGY_ID)
                 )
 
                 con.commit()
