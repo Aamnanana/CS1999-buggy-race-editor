@@ -39,11 +39,18 @@
 
     <br>
 
+    <label for="total_cost">Total Cost:</label>
+    <input type="text" name="total_cost" value="{{ buggy['total_cost'] }}" />
+
+
+    <br>
+
     <label for="fireproof">Do you want a fireproof buggy? (Y/N) :</label>
     <input type="text"  name="fireproof" value="{{ buggy['fireproof'] }}" />
     {% if fireproof == 'Y' %}
       {{ msg }}
     {% endif %}
+
 
     <br>
 
