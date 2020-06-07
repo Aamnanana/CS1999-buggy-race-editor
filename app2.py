@@ -51,15 +51,15 @@ def create_buggy():
         elif not int(qty_wheels) % 2 == 0:
             msg = f"{qty_wheels} is not an even number. Please try again!" 
             return render_template("buggy-form.html", msg = msg, buggy = record)
-        elif int(qty_wheels) < 2:
+        elif int(qty_wheels) <= 2:
             msg = f"You cannot have {qty_wheels}. Please try again!" 
             return render_template("buggy-form.html", msg = msg, buggy = record)
 
         fireproof = request.form['fireproof']
-        if fireproof:
-            msg = f"fireproof={fireproof}"
-            total_cost = int(70)
-            print("this works")
+        if fireproof == 'Y':
+            #msg = f"fireproof={fireproof}"
+            total_cost += 70
+            print("this works", total_cost)
             return render_template("buggy-form.html", msg = msg, buggy = record)
 
         try:
