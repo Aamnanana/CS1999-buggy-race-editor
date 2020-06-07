@@ -73,17 +73,13 @@ def create_buggy():
             with sql.connect(DATABASE_FILE) as con:
                 cur = con.cursor()
 
-                cur.execute("INSERT INTO buggies(total_cost) VALUES (hamster)")
-
-                cur.execute("UPDATE buggies SET total_cost=? WHERE id=?", total_cost, DEFAULT_BUGGY_ID)
-
                 cur.execute(
-                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=? WHERE id=?",
-                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, DEFAULT_BUGGY_ID)
+                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=? WHERE id=?",
+                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost, DEFAULT_BUGGY_ID)
                 )
 
                 con.commit()
-                msg += "Record successfully saved"
+                msg = "Record successfully saved"
         except:
             con.rollback()
             msg = "error in update operation"
