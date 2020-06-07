@@ -55,21 +55,26 @@ def create_buggy():
             msg = f"You cannot have {qty_wheels}. Please try again!" 
             return render_template("buggy-form.html", msg = msg, buggy = record)
 
-        fireproof = request.form['fireproof']
-        if fireproof == 'Y':
-          msg = f"A fireproof buggy costs {fireproof}, do you want to pay 70 coins? Enter yes or no into the box." 
-          if msg == "yes":
-            total_cost += 70
-            cur.execute(
-              "INSERT INTO buggies (total_cost) VALUES (70)",
-              (total_cost)
-            )
-            cur.execute(
-              "UPDATE buggies SET total_cost=? WHERE id=?",
-              (total_cost, DEFAULT_BUGGY_ID)
-            )
-            print("this works", total_cost)
-          return render_template("buggy-form.html", msg = msg, buggy = record)
+        # fireproof = request.form['fireproof']
+        # cur.execute(
+        #   "SELECT fireproof FROM buggies"
+        # )
+
+        # if not fireproof:
+        #   fire = "A fireproof buggy costs 70 coins. Do you want to pay 70 coins?"
+        #   #msg = f"A fireproof buggy costs {fireproof}, do you want to pay 70 coins? Enter yes or no into the box." 
+        #   if fire == "yes":
+        #     total_cost += 70
+        #     cur.execute(
+        #       "INSERT INTO buggies (total_cost) VALUES (70)",
+        #       (total_cost)
+        #     )
+        #     cur.execute(
+        #       "UPDATE buggies SET total_cost=?, fireproof=TRUE WHERE id=?",
+        #       (total_cost, fireproof, DEFAULT_BUGGY_ID)
+        #     )
+        #     print("this works", total_cost)
+        #   return render_template("buggy-form.html", fire = fire, buggy = record)
 
         try:
 
