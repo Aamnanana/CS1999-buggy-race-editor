@@ -64,7 +64,7 @@ def create_buggy():
           hamster = f"Please try again. Hamster booster is a number!" 
           return render_template("buggy-form.html", hamster = hamster, buggy = record)
         else:
-          total_cost = hamster_booster * 5
+          total_cost = int(hamster_booster) * 5
           print(total_cost)
           hamster = f"Total cost of buggy is: {total_cost}" 
           return render_template("updated.html", hamster = hamster, buggy = record)
@@ -72,6 +72,10 @@ def create_buggy():
         try:
             with sql.connect(DATABASE_FILE) as con:
                 cur = con.cursor()
+
+                cur.execute("INSERT INTO buggies(total_cost) VALUES (hamster)")
+
+                cur.execute("UPDATE buggies SET total_cost=? WHERE id=?", total_cost, DEFAULT_BUGGY_ID)
 
                 cur.execute(
                     "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=? WHERE id=?",
