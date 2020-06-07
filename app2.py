@@ -32,16 +32,11 @@ def create_buggy():
     if request.method == 'GET':
         return render_template("buggy-form.html", buggy = record)
     elif request.method == 'POST':
-        #fireproof = False
-        total_cost = 0
+        total_cost = ""
         msg=""
+        hamster = ""
 
-        flag_color = request.form['flag_color']
-        flag_color_secondary = request.form['flag_color_secondary']
         flag_pattern = request.form['flag_pattern']
-
-        msg = f"flag_color={flag_color}" 
-        msg = f"flag_color_secondary={flag_color_secondary}" 
         msg = f"flag_pattern={flag_pattern}" 
 
         qty_wheels = request.form['qty_wheels']
@@ -55,45 +50,42 @@ def create_buggy():
             msg = f"You cannot have {qty_wheels}. Please try again!" 
             return render_template("buggy-form.html", msg = msg, buggy = record)
 
-        # fireproof = request.form['fireproof']
-        # cur.execute(
-        #   "SELECT fireproof FROM buggies"
-        # )
-
-        # if not fireproof:
-        #   fire = "A fireproof buggy costs 70 coins. Do you want to pay 70 coins?"
-        #   #msg = f"A fireproof buggy costs {fireproof}, do you want to pay 70 coins? Enter yes or no into the box." 
-        #   if fire == "yes":
-        #     total_cost += 70
-        #     cur.execute(
-        #       "INSERT INTO buggies (total_cost) VALUES (70)",
-        #       (total_cost)
-        #     )
-        #     cur.execute(
-        #       "UPDATE buggies SET total_cost=?, fireproof=TRUE WHERE id=?",
-        #       (total_cost, fireproof, DEFAULT_BUGGY_ID)
-        #     )
-        #     print("this works", total_cost)
-        #   return render_template("buggy-form.html", fire = fire, buggy = record)
+        flag_color = request.form['flag_color']
+        flag_color_secondary = request.form['flag_color_secondary']
+        if flag_color.isdigit():
+          msg = f"{flag_color} must be a colour! Try again." 
+          return render_template("buggy-form.html", msg = msg, buggy = record)
+        elif flag_color_secondary.isdigit():
+          msg = f"{flag_color_secondary} must be a colour! Try again." 
+          return render_template("buggy-form.html", msg = msg, buggy = record)
+        
+        hamster_booster = request.form['hamster_booster']
+        if not hamster_booster.isdigit():
+          hamster = f"Please try again. Hamster booster is a number!" 
+          return render_template("buggy-form.html", hamster = hamster, buggy = record)
+        else:
+          total_cost = hamster_booster * 5
+          print(total_cost)
+          hamster = f"Total cost of buggy is: {total_cost}" 
+          return render_template("updated.html", hamster = hamster, buggy = record)
 
         try:
-
             with sql.connect(DATABASE_FILE) as con:
                 cur = con.cursor()
 
                 cur.execute(
-                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=? WHERE id=?",
-                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, DEFAULT_BUGGY_ID)
+                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=? WHERE id=?",
+                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, DEFAULT_BUGGY_ID)
                 )
 
                 con.commit()
-                msg = "Record successfully saved"
+                msg += "Record successfully saved"
         except:
             con.rollback()
             msg = "error in update operation"
         finally:
             con.close()
-            return render_template("updated.html", msg = msg)
+            return render_template("updated.html", msg = msg, total_cost = total_cost)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
