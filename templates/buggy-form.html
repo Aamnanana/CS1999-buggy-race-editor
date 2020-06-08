@@ -22,6 +22,7 @@
   <form action="/new" method="post">
 
     <input type="hidden" name="id" value="{{ buggy['id'] }}" />
+
     <label for="qty_wheels">Number of wheels:</label>
     <input type="text" name="qty_wheels" value="{{ buggy['qty_wheels'] }}" />
 
@@ -57,6 +58,12 @@
     <input type="submit" class="button">
 
   </form>
+
+  <!--<tr>
+    <form action="/delete" method="POST">
+    </form>
+    <td colspan="2" ><a href="/delete/{{ buggy['id'] }}"> Delete Me</a></td>
+    </tr>-->
 
   <p>
     <a href="/" class="button">home</a>
