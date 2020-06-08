@@ -75,9 +75,9 @@ def create_buggy():
                 cur = con.cursor()
 
                 if buggy_id.isdigit():
-                  cur.execute("UPDATE buggies SET qty_wheels=? WHERE id=?", (qty_wheels, buggy_id))
+                  cur.execute("UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=? WHERE id=?", (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost, buggy_id))
                 else:
-                  cur.execute("INSERT INTO buggies (qty_wheels) VALUES (?)", (qty_wheels,))
+                  cur.execute("INSERT INTO buggies (qty_wheels, flag_color, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=?) VALUES (?,?,?,?,?,?)", (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost,))
 
                 # cur.execute(
                 #     "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=? WHERE id=?",
