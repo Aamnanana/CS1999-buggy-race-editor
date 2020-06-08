@@ -137,32 +137,32 @@ def summary():
 #   there always being a record to update (because the
 #   student needs to change that!)
 #------------------------------------------------------------
-@app.route('/delete', methods = ['POST'])
+@app.route('/delete/<buggy_id>', methods = ['POST'])
 def delete_buggy():
 
-  #if request.method == 'POST':
-    # con = sql.connect(DATABASE_FILE)
-    # con.row_factory = sql.Row
-    # cur = con.cursor()
-    # cur.execute("SELECT * FROM buggies WHERE id=?")
-    # record = cur.fetchone(); 
+  if request.method == 'POST':
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies WHERE id=?")
+    record = cur.fetchone(); 
 
-    #buggy_id = request.form['id']
+    buggy_id = request.form['id']
 
-  msg = "deleting buggy"
-
-  try:
-    with sql.connect(DATABASE_FILE) as con:
-      cur = con.cursor()
-      cur.execute("DELETE FROM buggies WHERE id=?", (buggy_id,))
-      con.commit()
-      msg = "Buggy deleted"
-  except:
-    con.rollback()
-    msg = "error in delete operation"
-  finally:
-    con.close()
-    return render_template("updated.html", msg = msg)
+    msg = f"deleting buggy" 
+    
+    try:
+      with sql.connect(DATABASE_FILE) as con:
+        cur = con.cursor()
+        cur.execute("DELETE FROM buggies WHERE id=?", (buggy_id,))
+        con.commit()
+        msg = f"Buggy deleted" 
+    except:
+      con.rollback()
+      msg = f"error in delete operation" 
+    finally:
+      con.close()
+      return render_template("updated.html", msg = msg)
 
 
 if __name__ == '__main__':
