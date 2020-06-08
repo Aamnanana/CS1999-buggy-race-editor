@@ -79,11 +79,6 @@ def create_buggy():
                 else:
                   cur.execute("INSERT INTO buggies (qty_wheels, flag_color, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=?) VALUES (?,?,?,?,?,?)", (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost,))
 
-                # cur.execute(
-                #     "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=? WHERE id=?",
-                #     (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost, DEFAULT_BUGGY_ID)
-                # )
-
                 con.commit()
                 msg = "Record successfully saved"
         except:
@@ -144,6 +139,12 @@ def summary():
 #------------------------------------------------------------
 @app.route('/delete', methods = ['POST'])
 def delete_buggy():
+  con = sql.connect(DATABASE_FILE)
+  con.row_factory = sql.Row
+  cur = con.cursor()
+  cur.execute("SELECT * FROM buggies WHERE id=?")
+  record = cur.fetchone(); 
+
   try:
     msg = "deleting buggy"
     with sql.connect(DATABASE_FILE) as con:
