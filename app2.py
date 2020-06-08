@@ -32,9 +32,9 @@ def create_buggy():
     if request.method == 'GET':
         return render_template("buggy-form.html", buggy = None)
     elif request.method == 'POST':
-        total_cost = ""
+        total_cost=""
         msg=""
-        hamster = ""
+        hamster=""
 
         buggy_id = request.form['id']
 
@@ -77,7 +77,7 @@ def create_buggy():
                 if buggy_id.isdigit():
                   cur.execute("UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=? WHERE id=?", (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost, buggy_id))
                 else:
-                  cur.execute("INSERT INTO buggies (qty_wheels, flag_color, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=?) VALUES (?,?,?,?,?,?)", (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost,))
+                  cur.execute("INSERT INTO buggies (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost) VALUES (?,?,?,?,?,?)", (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost,))
 
                 con.commit()
                 msg = "Record successfully saved"
@@ -137,32 +137,32 @@ def summary():
 #   there always being a record to update (because the
 #   student needs to change that!)
 #------------------------------------------------------------
-# @app.route('/delete/<buggy_id>', methods = ['POST'])
-# def delete_buggy(buggy_id):
+@app.route('/delete', methods = ['POST'])
+def delete_buggy():
 
-#   if request.method == 'POST':
-#     # con = sql.connect(DATABASE_FILE)
-#     # con.row_factory = sql.Row
-#     # cur = con.cursor()
-#     # cur.execute("SELECT * FROM buggies WHERE id=?")
-#     # record = cur.fetchone(); 
+  #if request.method == 'POST':
+    # con = sql.connect(DATABASE_FILE)
+    # con.row_factory = sql.Row
+    # cur = con.cursor()
+    # cur.execute("SELECT * FROM buggies WHERE id=?")
+    # record = cur.fetchone(); 
 
-#     #buggy_id = request.form['id']
+    #buggy_id = request.form['id']
 
-#     msg = f"deleting buggy"  
+  msg = "deleting buggy"
 
-#     try:
-#       with sql.connect(DATABASE_FILE) as con:
-#         cur = con.cursor()
-#         cur.execute("DELETE FROM buggies WHERE id=?", (buggy_id,))
-#         con.commit()
-#         msg = f"Buggy deleted" 
-#     except:
-#       con.rollback()
-#       msg = f"error in delete operation" 
-#     finally:
-#       con.close()
-#       return render_template("updated.html", msg = msg)
+  try:
+    with sql.connect(DATABASE_FILE) as con:
+      cur = con.cursor()
+      cur.execute("DELETE FROM buggies WHERE id=?", (buggy_id,))
+      con.commit()
+      msg = "Buggy deleted"
+  except:
+    con.rollback()
+    msg = "error in delete operation"
+  finally:
+    con.close()
+    return render_template("updated.html", msg = msg)
 
 
 if __name__ == '__main__':
