@@ -27,14 +27,16 @@ def create_buggy():
     con.row_factory = sql.Row
     cur = con.cursor()
     cur.execute("SELECT * FROM buggies")
-    record = cur.fetchone();
+    record = cur.fetchone(); 
 
     if request.method == 'GET':
-        return render_template("buggy-form.html", buggy = record)
+        return render_template("buggy-form.html", buggy = None)
     elif request.method == 'POST':
         total_cost = ""
         msg=""
         hamster = ""
+
+        buggy_id = request.form['id']
 
         flag_pattern = request.form['flag_pattern']
         msg = f"flag_pattern={flag_pattern}" 
@@ -72,7 +74,10 @@ def create_buggy():
             with sql.connect(DATABASE_FILE) as con:
                 cur = con.cursor()
 
-                cur.execute("INSERT INTO buggies (qty_wheels) VALUES (?)", (qty_wheels,))
+                if buggy_id.isdigit():
+                  cur.execute("UPDATE buggies SET qty_wheels=? WHERE id=?", (qty_wheels, buggy_id))
+                else:
+                  cur.execute("INSERT INTO buggies (qty_wheels) VALUES (?)", (qty_wheels,))
 
                 # cur.execute(
                 #     "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=? WHERE id=?",
@@ -101,11 +106,16 @@ def show_buggies():
   return render_template("buggy.html", buggies = records)
 
 #------------------------------------------------------------
-# a page for displaying the buggy
+# a page for editing the buggy
 #------------------------------------------------------------
-@app.route('/new')
-def edit_buggy():
-  return render_template("buggy-form.html")
+@app.route('/edit/<buggy_id>')
+def edit_buggy(buggy_id):
+  con = sql.connect(DATABASE_FILE)
+  con.row_factory = sql.Row
+  cur = con.cursor()
+  cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id,))
+  record = cur.fetchone(); 
+  return render_template("buggy-form.html", buggy = record)
 
 #------------------------------------------------------------
 # get JSON from current record
