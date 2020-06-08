@@ -137,27 +137,30 @@ def summary():
 #   there always being a record to update (because the
 #   student needs to change that!)
 #------------------------------------------------------------
-@app.route('/delete', methods = ['POST'])
-def delete_buggy():
-  con = sql.connect(DATABASE_FILE)
-  con.row_factory = sql.Row
-  cur = con.cursor()
-  cur.execute("SELECT * FROM buggies WHERE id=?")
-  record = cur.fetchone(); 
+@app.route('/delete/<buggy_id>', methods = ['GET'])
+def delete_buggy(buggy_id):
 
-  try:
-    msg = "deleting buggy"
-    with sql.connect(DATABASE_FILE) as con:
-      cur = con.cursor()
-      cur.execute("DELETE FROM buggies")
-      con.commit()
-      msg = "Buggy deleted"
-  except:
-    con.rollback()
-    msg = "error in delete operation"
-  finally:
-    con.close()
-    return render_template("updated.html", msg = msg)
+  if request.method == 'GET':
+    # con = sql.connect(DATABASE_FILE)
+    # con.row_factory = sql.Row
+    # cur = con.cursor()
+    # cur.execute("SELECT * FROM buggies WHERE id=?")
+    # record = cur.fetchone(); 
+
+    msg = f"deleting buggy"  
+
+    try:
+      with sql.connect(DATABASE_FILE) as con:
+        cur = con.cursor()
+        cur.execute("DELETE FROM buggies WHERE id=?", (buggy_id,))
+        con.commit()
+        msg = f"Buggy deleted" 
+    except:
+      con.rollback()
+      msg = f"error in delete operation" 
+    finally:
+      con.close()
+      return render_template("updated.html", msg = msg)
 
 
 if __name__ == '__main__':
