@@ -62,12 +62,12 @@ def create_buggy():
         hamster_booster = request.form['hamster_booster']
         if not hamster_booster.isdigit():
           hamster = f"Please try again. Hamster booster is a number!" 
-          return render_template("buggy-form.html", hamster = hamster, buggy = record)
+          return render_template("buggy-form.html", hamster = hamster, buggy = record, msg = msg)
         else:
           total_cost = int(hamster_booster) * 5
           print(total_cost)
           hamster = f"Total cost of buggy is: {total_cost}" 
-          return render_template("updated.html", hamster = hamster, buggy = record)
+          #return render_template("updated.html", hamster = hamster, buggy = record)
 
         try:
             with sql.connect(DATABASE_FILE) as con:
@@ -85,7 +85,7 @@ def create_buggy():
             msg = "error in update operation"
         finally:
             con.close()
-            return render_template("updated.html", msg = msg, total_cost = total_cost)
+            return render_template("updated.html", msg = msg, total_cost = total_cost, hamster = hamster)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
