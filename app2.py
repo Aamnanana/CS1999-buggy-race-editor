@@ -67,16 +67,17 @@ def create_buggy():
           total_cost = int(hamster_booster) * 5
           print(total_cost)
           hamster = f"Total cost of buggy is: {total_cost}" 
-          #return render_template("updated.html", hamster = hamster, buggy = record)
 
         try:
             with sql.connect(DATABASE_FILE) as con:
                 cur = con.cursor()
 
-                cur.execute(
-                    "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=? WHERE id=?",
-                    (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost, DEFAULT_BUGGY_ID)
-                )
+                cur.execute("INSERT INTO buggies (qty_wheels) VALUES (?)", (qty_wheels,))
+
+                # cur.execute(
+                #     "UPDATE buggies SET qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, hamster_booster=?, total_cost=? WHERE id=?",
+                #     (qty_wheels, flag_color, flag_color_secondary, flag_pattern, hamster_booster, total_cost, DEFAULT_BUGGY_ID)
+                # )
 
                 con.commit()
                 msg = "Record successfully saved"
@@ -85,7 +86,7 @@ def create_buggy():
             msg = "error in update operation"
         finally:
             con.close()
-            return render_template("updated.html", msg = msg, total_cost = total_cost, hamster = hamster)
+            return render_template("updated.html", msg = msg, hamster = hamster)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
@@ -96,8 +97,8 @@ def show_buggies():
   con.row_factory = sql.Row
   cur = con.cursor()
   cur.execute("SELECT * FROM buggies")
-  record = cur.fetchone(); 
-  return render_template("buggy.html", buggy = record)
+  records = cur.fetchall(); 
+  return render_template("buggy.html", buggies = records)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
