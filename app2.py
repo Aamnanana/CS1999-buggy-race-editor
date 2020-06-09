@@ -126,7 +126,7 @@ def summary(buggy_id):
   cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (buggy_id))
   record = cur.fetchone()
 
-  jsondata = f"You can't access JSON data for this buggy because it has been deleted."
+  jsondata = f"You can't access JSON data for this buggy because it has been deleted." 
 
   if record is not None:
     return jsonify(
