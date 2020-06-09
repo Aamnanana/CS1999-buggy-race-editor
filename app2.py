@@ -118,18 +118,26 @@ def edit_buggy(buggy_id):
 #   using it because we'll be dipping diectly into the
 #   database
 #------------------------------------------------------------
-@app.route('/json')
-def summary():
+@app.route('/json/<buggy_id>')
+def summary(buggy_id):
   con = sql.connect(DATABASE_FILE)
   con.row_factory = sql.Row
   cur = con.cursor()
-  cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (DEFAULT_BUGGY_ID))
-  return jsonify(
-      {k: v for k, v in dict(zip(
-        [column[0] for column in cur.description], cur.fetchone())).items()
-        if (v != "" and v is not None)
-      }
-    )
+  cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (buggy_id))
+  record = cur.fetchone()
+
+  jsondata = f"You can't access JSON data for this buggy because it has been deleted."
+
+  if record is not None:
+    return jsonify(
+        {k: v for k, v in dict(zip(
+          [column[0] for column in cur.description], record)).items()
+          if (v != "" and v is not None)
+        }
+      )
+  else:
+    print("Record is none because buggy is deleted.")
+    return render_template("updated.html", jsondata = jsondata, buggy = record)
 
 #------------------------------------------------------------
 # delete the buggy
@@ -139,16 +147,7 @@ def summary():
 #------------------------------------------------------------
 @app.route('/delete/<buggy_id>', methods = ['POST'])
 def delete_buggy(buggy_id):
-
   if request.method == 'POST':
-    # con = sql.connect(DATABASE_FILE)
-    # con.row_factory = sql.Row
-    # cur = con.cursor()
-    # cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id,))
-    # record = cur.fetchone(); 
-
-    #buggy_id = request.form['id']
-
     msg = f"deleting buggy" 
     
     try:
