@@ -138,16 +138,16 @@ def summary():
 #   student needs to change that!)
 #------------------------------------------------------------
 @app.route('/delete/<buggy_id>', methods = ['POST'])
-def delete_buggy():
+def delete_buggy(buggy_id):
 
   if request.method == 'POST':
-    con = sql.connect(DATABASE_FILE)
-    con.row_factory = sql.Row
-    cur = con.cursor()
-    cur.execute("SELECT * FROM buggies WHERE id=?")
-    record = cur.fetchone(); 
+    # con = sql.connect(DATABASE_FILE)
+    # con.row_factory = sql.Row
+    # cur = con.cursor()
+    # cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id,))
+    # record = cur.fetchone(); 
 
-    buggy_id = request.form['id']
+    #buggy_id = request.form['id']
 
     msg = f"deleting buggy" 
     
