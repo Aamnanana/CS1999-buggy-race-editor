@@ -29,6 +29,20 @@ h1 {
   color: black;
   text-align: center;
 }
+h2 {
+  font-family: sans-serif;
+  font-style: italic;
+  margin: 0 0 1em 0;
+  color: black;
+  text-align: center;
+}
+h3 {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+  margin: 0 0 1em 0;
+  color: black;
+  text-align: center;
+}
 p {
   margin: 1em 0;
 }
