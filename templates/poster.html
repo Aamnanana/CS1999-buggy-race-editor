@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>
+    &#x1F3C1; CS1999 Buggy Race Editor &#x1F3C1;
+</h1>
+
+<h3>
+    Aamna Rehman
+</h3>
+
+<br>
+
+<div class="Welcome">
+  <p>
+    <em>Welcome to The Buggy Race Editor! </em>
+    <br> 
+    <br>
+    This editor allows you to create, edit, delete and last, but not least, race them too!
+    Choose your own flag colours and pattern to show off your buggy and completely customise it. Own your buggy!
+  </p>
+
+  <p>
+    <strong>Want more than one buggy?</strong> Create some! There is no limit.
+    <br>
+    <strong>Want more wheels?</strong> The number is endless - make sure they are an even number of wheels!
+    <br>
+    <strong>Want to go faster?</strong> Have a blast racing with additional Hamster Boosters - only 5 coins, for added speed!
+    <br>
+    <strong>Don't like your buggy?</strong> Delete it! Or, even better: edit it! Change it till your heart's content. All with just a click of the button!
+  </p>
+
+  <p>
+    <strong><em>Start Racing Now!</em></strong>
+  </p>
+</div>
+
+<h1> &#x1F3C1; </h1>
+
+<style>
+  .cs1999-tasks {
+    border-top: 1px solid black;
+    margin-top: 4em;
+  }
+  .cs1999-tasks .task {
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid black;
+  }
+  .cs1999-tasks .task h3 {
+    margin: 1em;
+    padding: 1em;
+    border-bottom: 3px solid #992929;
+  }
+  .Welcome {
+    text-align: center;
+  }
+</style>
+
+<section class="cs1999-tasks">
+
+  <div class="task">
+    <h2>0-GET</h2>
+    <h3>Get the Source Code</h3>
+    <p>
+      I forked the repo on GitHub and then used <code>git clone</code> to make a local copy.
+    </p>
+    <p>
+      Once the repo was on my own machine I was able to commit changes to version control
+      as I went along, and I pushed back up to my GitHub repo at the end of each day, as well as each major change in the python and HTML pages.
+      I set up Git with my GitHub account by entering my username and password (though I managed to do this without using an SSH key!).
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>0-RUN</h2>
+    <h3>Get app running and view it in a browser</h3>
+    <p>
+      I installed flask inside a venv directory and then ran the program through <strong><code>Command Line</code></strong>.
+    </p>
+    <p>
+      After I had installed Flask (by typing in <code>pip install flask</code>), I had to activate venv using <code>venv\Scripts\activate</code>.
+      Then I initalised the database, which successfully loaded onto Command Line. By using <code>set FLASK_APP=app2.py</code>,
+      <code>set FLASK_ENV=development</code> and finally <code>flask run</code>, I was able to set up the Buggy Webserver.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>0-CHANGE</h2>
+    <h3>Make a change to a template and see it appear</h3>
+    <p>
+      I added a word into a HTML page and refreshed the Webserver to see the changes. 
+    </p>
+    <p>
+      I edited the heading in <code>index.html</code> by typing in 'HELLO' and refreshed the webpage to see the changes. 
+      I was surprised as to how this worked!
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>1-ADD</h2>
+    <h3>Add more data to the form</h3>
+    <p>
+      I added flag colours, flag pattern, Hamster Boosters and also tried the Fireproof item for the buggy.
+    </p>
+    <p>
+      For this task, I added the <code>flag_color</code> and <code>flag_colour_secondary</code> items, which determine the colour of the flag. 
+      The user inputs their flag colour and another secondary colour of choice. It was not hard to add these items into the buggy server because <code>qty_wheels</code>
+      had already been given, so the <code>flag_color</code> and <code>flag_colour_secondary</code> items were similar. 
+      <code>flag_pattern</code> was also similar to the latter, except <code>flag_pattern</code> had many options that the user could choose from. I used <code>select</code>
+      and <code>option</code>. Then, I added Hamster Boosters which 'boosted' the Buggy to make it go faster. Finally, I tried adding Fireproof item, but unfortunately, it 
+      did not go to plan as I could not understand how to use <code>fireproof</code> in the buggy server (I explain why I did not use the Fireproof item in <strong>1-VALID</strong>).
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>1-VALID</h2>
+    <h3>Add basic data validation</h3>
+    <p>
+      I validated <code>qty_wheels</code>, <code>flag_color</code>, <code>flag_colour_secondary</code> and <code>hamster_booster</code> using <code>.isdigit()</code>.
+    </p>
+    <p>
+      By using <code>.isdigit()</code> I was able to attain data validation from the user's inputs. 
+      When the input is <strong>not</strong> a digit (for <code>qty_wheels</code>), then the webserver will return an error message alerting the user that <code>qty_wheels</code>
+      cannot be a 'string'/word. Hamster Booster also follows this rule.
+      Again, by using <code>.isdigit()</code> for <code>flag_color</code> and <code>flag_colour_secondary</code>, I could check that if the input
+      entered was a <strong>digit</strong> instead of a colour, then the error message will show the user and let them enter the correct input.
+      Although, if the input was <strong>not a colour</strong>, then there would be no error message, so I think there could have been a solution to this.
+
+      As well as these validated items, I did <em>try</em> <code>fireproof</code>, by asking the user if they wanted a Fireproof buggy; if the user
+      said <code>yes</code>, the buggy would be fireproof (and would also direct the user to <code>updated.html</code>), but I could not figure out <em>how</em>
+      to ask the user's input without it messing up my whole program. Instead, I worked on perfecting Hamster Booster.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>1-STYLE</h2>
+    <h3>Style your editor just how you like it</h3>
+    <p>
+      I changed the colours and fonts (slightly different from the original font) to make it more beautiful and accessable.
+    </p>
+    <p>
+      I managed to change the layout of the webpage by moving the input boxes near the middle so that it had a cohesive look to it.
+      I also changed the colours of the webpage to make it suitable for the end users (in case they have disabilities).
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>2-EDIT</h2>
+    <h3>Edit the record by loading its current values into the form</h3>
+    <p>
+      I edited the record so that the current values would be loaded into the form whenever the user loaded that webpage by altering the <code>def edit_buggy()</code> function.
+    </p>
+    <p>
+      This task was completed using the <code>value</code> option in <code>buggy-form.html</code> where it takes the item of the buggy.
+      So, for the flag colour, the value would be inside an <code>input</code> tag equal to the colour of the flag previously entered.
+      Whenever the user wants to make a buggy, the values that were previously entered would already be there and the inputs would be filled in. 
+      All the items, apart from <code>hamster_booster</code>, were added in the buggy use this method because the user decides how many Hamster Boosters they would like to add.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>2-FORM</h2>
+    <h3>Make the form better</h3>
+    <p>
+      I tried to make the form better for this task by using <code>label for</code>, but could not manage to change the form for <code>flag_pattern</code>.
+    </p>
+    <p>
+      For this task, I lined up all the input boxes and made sure they had equal spacing in between them, and also made sure that the 
+      webpage was easy to use and be easy to access.
+      However, I tried to change the layout of the <code>flag_pattern</code> box.
+      Currently, when the webserver is loaded, the <code>flag_pattern</code> box is shown to not be inline
+      with the other boxes - altering the style of the dropdown list was tricky to do without messing up the whole webpage, 
+      so I left the box as it was.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>2-COST</h2>
+    <h3>Calculate and save the game cost of the buggy</h3>
+    <p>
+      I calculated the cost of the buggy (from <code>hamster_booster</code>) and also saved the total cost in the database.
+    </p>
+    <p>
+      Calculating the cost of the buggy was not difficult, as I had completed <code>hamster_booster</code> item, all I had to do was set a varibale called 
+      <code>total_cost</code> which was equal to <code>hamster_booster</code> multiplied by 5. Whatever the number of Hamster Boosters was input, it would be saved into the database
+      using <code>INSERT INTO</code> and also the cost was saved into the database with the same statement. Then, once the cost was calculated, the total cost of the buggy would appear on
+      <code>updated.html</code> along with whether the record was successfully saved or not. I also tried to calculate the cost of <code>fireproof</code>,
+      but, since I could not complete its initial rule, I decided not to add it in.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>2-RULES</h2>
+    <h3>Add validation according to the game rules</h3>
+    <p>
+      Similar to <strong>1-VALID</strong>, I managed to add some rules to the game.
+    </p>
+    <p>
+      The first validation I did was to make sure the number of wheels that were being input were even. I used Python's <code><if-else></if-else></code> statement
+      and <code>qty_wheels % 2 == 0</code>, which meant that if <code>qty_wheels</code> were odd, the user should enter <em>another</em> number until they type an even number.
+      I also made sure that <code>qty_wheels</code> were greater than 2, since minimum number of wheels was 4. 
+    </p>
+    <p>
+      Some rules that I used for this task was that, by using <code>.isdigit()</code> for <code>flag_color</code> and <code>flag_colour_secondary</code>, I could check that if the input
+      entered was a <strong>digit</strong> instead of a colour, then the error message will show the user and let them enter the correct input.
+      Although, if the input was <strong>not a colour</strong> there would be no error message, so I think there could have been a solution to this.
+      I did not fix this issue where if the user entered, for example, <code>cat</code>, the program would believe this is a colour and let the Flag be a 'cat'.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>3-ENV</h2>
+    <h3>Switch to using development or production environments</h3>
+    <p>
+      I can easily switch between development and production environments by setting <code>set FLASK_ENV</code> to either one.
+    </p>
+    <p>
+      Once switching between these two environments, I was able to notice that when using a <strong>development</strong> environment,
+      my <code>Command Line</code> was able to detect changes to my python program, whereas using a <strong>production</strong> environment meant
+      that any changes I made were not detected by <code>Command Line</code> and so when refreshing the webpage, nothing happened.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>3-MULTI</h2>
+    <h3>Allow different buggies to be created</h3>
+    <p>
+      My webserver allows multiple buggies to be created, edited and saved into the database.
+    </p>
+    <p>
+      This task was at first difficult because there were many things that did not make sense. In the end though, my webserver allows the user
+      to create new buggies, save them onto the database and also edit them if they wish to. The first thing to do was to change the <code>def show_buggy()</code> function
+      so that it showed the function to display multiple buggies. I then had to find out the buggy ID so that whatever ID was being used, I could use that
+      to insert more buggies and increase the number of buggy ID's. The user can also edit their buggy, but the ID remains the same - <em>it can't change</em>.
+      As well as this, the user can create a new buggy, save that buggy and then see the buggies when clicking on <code>Show Buggies</code> button in the homepage.
+      All the buggies are saved onto the database by using <code>UPDATE</code> if the <code>buggy_id</code> is a digit (which means that it is an existing buggy) and using
+      <code>INSERT INTO</code> if the <code>buggy_id</code> is not a digit (which creates a new buggy).
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>3-DEL</h2>
+    <h3>Allow buggies to be deleted</h3>
+    <p>
+      The buggies can be deleted by using a <code>POST</code> method in the <code>def delte_buggy()</code> function.
+    </p>
+    <p>
+      This was probably harder than figuring out the rest of the tasks because it required a lot of trial and error. The buggies can be successfully deleted when the user
+      clicks on <code>Show Buggies</code> and then an <code>Edit Me</code> button. After the user clicks on <code>Edit Me</code> they can delete the buggy, which will erase the buggy from 
+      the database. The <code>def delte_buggy()</code> function was not hard to change, but it was hard to make sure that the request method for Flask was a <code>POST</code> method instead of <code>GET</code>. 
+      To make sure it was a <code>POST</code> request, I used the <code>form action</code> tag which sends data from the form to where the data was submitted. Inside this 
+      tag I added a <code>Delete this buggy</code> button for the user to click on. 
+    </p>
+    <p>
+      After I had completed this task, I realised now that the <code>Get JSON</code> button did not work. I had to change it to get rid of this button and instead
+      use it after the user clicks on <code>Show Buggies</code> button. This way the user can check the JSON for each buggy by using its <code>buggy_id</code>.
+      I had to alter <code>def summary()</code> function so that if there was nothing in the database for <code>buggy_id</code>, then it would return the error message in <code>updated.html</code>. 
+      If there was something in the record, then the JSON would be shown after the user clicks on <code>Show JSON for this buggy</code> button.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>3-TESTS</h2>
+    <h3>Write some tests</h3>
+    <p>
+      I then conducted some tests by running the program several times, with several different inputs to get the correct responce.
+    </p>
+    <p>
+      All the tests that I had run for my webserver seemed to run perfectly, except for when the user types in something that is <em>not</em> a colour, but
+      also <code>not</code> a digit for <code>flag_color</code> and <code>flag_colour_secondary</code>. I think that this could be avoided by only using 
+      HTML colour codes for the Flag colours. As well as this, I do wish that <code>fireproof</code> had worked, because, in some sense, it is similar to <code>hamster_booster</code>. 
+      Also, I made sure to test my webserver after each major addition to make sure everything ran smoothly and the way I wanted it to.
+    </p>
+  </div>
+
+</section>
+
+{% endblock %}
