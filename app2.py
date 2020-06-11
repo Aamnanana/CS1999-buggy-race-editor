@@ -163,6 +163,14 @@ def delete_buggy(buggy_id):
       con.close()
       return render_template("updated.html", msg = msg)
 
+#----------------------------------------------------------
+# POSTER for CS1999
+#   This is the route for my poster on this project
+#----------------------------------------------------------
+@app.route('/poster')
+def poster():
+   return render_template('poster.html')
+
 
 if __name__ == '__main__':
    app.run(debug = True, host="0.0.0.0")
